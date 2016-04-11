@@ -1,5 +1,5 @@
-var request = require('../libs/request');
-var interpreter = require('../libs/interpreter');
+var request = require('../').request;
+var interpreter = require('../').interpreter;
 
 var assert = require('assert');
 
