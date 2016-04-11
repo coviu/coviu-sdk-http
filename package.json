@@ -1,0 +1,29 @@
+{
+  "name": "coviu-sdk-http",
+  "version": "0.0.1",
+  "description": "DSL for constructing requests",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha ./test/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/coviu/coviu-sdk-http.git"
+  },
+  "keywords": [
+    "http"
+  ],
+  "author": "Briely Marum",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/coviu/coviu-sdk-http#readme",
+  "dependencies": {
+    "cuid": "^1.3.8",
+    "curry": "^1.2.0",
+    "es6-promises": "^1.0.10",
+    "jsonwebtoken": "^5.0.5",
+    "request": "^2.64.0"
+  },
+  "devDependencies": {
+    "mocha": "2.3.3"
+  }
+}
