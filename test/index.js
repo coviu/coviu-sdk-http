@@ -1,5 +1,6 @@
-var request = require('../').request;
-var interpreter = require('../').interpreter;
+var request = require('../request');
+var interpreter = require('../request-interpreter');
+var fetchInterpreter = require('../fetch-interpreter');
 
 var assert = require('assert');
 
@@ -34,6 +35,13 @@ describe('request', function(){
   it('can be run against an interpreter and have a result returned', function(){
     var req = request.request('https://monitor.coviu.com');
     return interpreter.run(req).then(function(res){
+      assert(typeof res !== 'undefined');
+    })
+  });
+
+  it('can be run against the fetch interpreter and have a result returned', function(){
+    var req = request.request('https://monitor.coviu.com');
+    return fetchInterpreter.run(req).then(function(res){
       assert(typeof res !== 'undefined');
     })
   });
