@@ -7,8 +7,12 @@ exports.url = function (p){
 }
 
 exports.buildQueryString = function (query) {
-  var q = querystring.encode(query);
+  var q = exports.urlEncode(query);
   return q.length > 0 ? '?' + q : '';
+}
+
+exports.urlEncode = function (body) {
+  return querystring.encode(body);
 }
 
 exports.httpSuccess = function (statusCode) {
