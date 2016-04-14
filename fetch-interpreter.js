@@ -68,7 +68,7 @@ exports.run = function(des) {
   if (render.QUERY) url = url + utils.buildQueryString(render.QUERY);
 
   return attachAuth(render.AUTH, req).then(function(req){
-    return fetch(new Request(url, req)).then(function(result){
+    return fetch(new Request(url, req), {credentials: 'same-origin'}).then(function(result){
       if (!utils.httpSuccess(result.status)) {
         return result.text().then(function(body){
           throw new Error({err: 'http request failed',
