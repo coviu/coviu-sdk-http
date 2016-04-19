@@ -69,9 +69,17 @@ exports.run = function(des) {
 
   return attachAuth(render.AUTH, req).then(function(req){
     return fetch(new Request(url, req), {credentials: 'same-origin'}).then(function(result){
+      var body;
+      var contentType = result.headers.get("content-type");
+      if (contentType && contentType.indexOf("application/json") !== -1) {
+        body = result.json();
+      } else {
+        body = result.text();
+      }
       if (!utils.httpSuccess(result.status)) {
-        return result.text().then(function(body){
-          throw new Error({err: 'http request failed',
+        return body.then(function (body) {
+          return Promise.reject({
+            err: 'http request failed',
             statusCode: result.status,
             body: body,
             headers: JSON.stringify(result.headers),
@@ -80,12 +88,9 @@ exports.run = function(des) {
             reqBody: req.body
           });
         });
+      } else {
+        return body;
       }
-      var contentType = result.headers.get("content-type");
-      if(contentType && contentType.indexOf("application/json") !== -1) {
-        return result.json();
-      }
-      return result.text();
     }).then(utils.applyMap(render));
   });
 };
