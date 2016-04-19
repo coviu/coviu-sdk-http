@@ -1,6 +1,6 @@
 {
   "name": "coviu-sdk-http",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "DSL for constructing requests",
   "main": "index.js",
   "scripts": {
