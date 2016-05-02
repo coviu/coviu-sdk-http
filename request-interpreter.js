@@ -6,13 +6,21 @@ var utils = require('./libs/interpreter-utils');
 var handle = exports.handleResponse = function (resolve, reject) {
   return function(err, res){
     if (err) return reject(err);
-    if (!utils.httpSuccess(res.statusCode)) return reject({err: 'http request failed',
-      statusCode: res.statusCode,
-      body: res.body,
-      headers: res.headers,
-      reqHeaders: res.req._headers,
-      path: res.req.path
-    });
+    if (!utils.httpSuccess(res.statusCode)) {
+      // Attempt to unpack the body. This replicates the behaviour in `fetch-interpreter`.
+      var body = res.body;
+      try {
+        body = JSON.parse(res.body)
+      } catch (e) {}
+
+      return reject({err: 'http request failed',
+        statusCode: res.statusCode,
+        body: json,
+        headers: res.headers,
+        reqHeaders: res.req._headers,
+        path: res.req.path
+      });
+    }
     if (typeof res.body === 'string' && res.body.length > 0) return resolve(JSON.parse(res.body));
     resolve(res.body);
   };
