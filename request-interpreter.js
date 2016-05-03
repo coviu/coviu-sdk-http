@@ -15,7 +15,7 @@ var handle = exports.handleResponse = function (resolve, reject) {
 
       return reject({err: 'http request failed',
         statusCode: res.statusCode,
-        body: json,
+        body: body,
         headers: res.headers,
         reqHeaders: res.req._headers,
         path: res.req.path
