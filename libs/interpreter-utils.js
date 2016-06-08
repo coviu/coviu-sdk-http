@@ -1,6 +1,7 @@
 require('es6-promise').polyfill();
 
 var querystring = require('querystring');
+var shapeful = require('shapeful');
 
 exports.url = function (p){
   return p.join('');
@@ -45,4 +46,29 @@ exports.applyMap = function(render) {
     }, result);
     return result;
   };
-}
+};
+
+
+exports.validateShape = function(render) {
+  var failure = false;
+  if (render.BODY_SHAPE) {
+    if (!shapeful(render.BODY || {}, render.BODY_SHAPE)) {
+      failure = {
+        msg: 'Error in request body shape',
+        expected: render.BODY_SHAPE,
+        received: render.BODY
+      };
+    }
+  }
+
+  if (!failure && render.QUERY_SHAPE) {
+    if (!shapeful(render.QUERY || {}, render.QUERY_SHAPE)) {
+      failure = {
+        msg: 'Error in request query shape',
+        expected: render.QUERY_SHAPE,
+        received: render.QUERY
+      };
+    }
+  }
+  return failure;
+};

@@ -1,6 +1,7 @@
 var request = require('../request');
 var interpreter = require('../request-interpreter');
 var fetchInterpreter = require('../fetch-interpreter');
+var utils = require('../libs/interpreter-utils');
 
 var assert = require('assert');
 
@@ -68,5 +69,17 @@ describe('request', function(){
 
   it('can append values to the path using subpath', function(){
     assert(request.query(req.path('/foo').subpath('/bar'), 'PATH') === '/foo/bar');
+  });
+
+  it('body validation can be applied', function() {
+    assert(!utils.validateShape(req.bodyShape('string').body('string').reduce()));
+    assert(utils.validateShape(req.bodyShape('string').body(true).reduce()));
+    assert(!utils.validateShape(req.bodyShape({key: 'string', val:'boolean'}).body({key: 'fo', val: false}).reduce()));
+  });
+
+  it('query validation can be applied', function() {
+    assert(!utils.validateShape(req.queryShape('string').query('string').reduce()));
+    assert(utils.validateShape(req.queryShape('string').query(true).reduce()));
+    assert(!utils.validateShape(req.queryShape({key: 'string', val:'boolean'}).query({key: 'fo', val: false}).reduce()));
   });
 });

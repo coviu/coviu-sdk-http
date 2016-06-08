@@ -31,6 +31,12 @@ var handle = exports.handleResponse = function (resolve, reject) {
  * any mapping functions on the result. This is a bit nasty, but pretty useful */
 exports.run = function(des) {
   var render = des.reduce();
+  var validationFailure = utils.validateShape(render);
+
+  if (validationFailure) {
+    return new Promise(function(accept, reject){reject(validationFailure)});
+  }
+
   var req = {};
   req.url = utils.url([render.HOST, render.PATH]);
   if (render.FORM) req.form = render.FORM;

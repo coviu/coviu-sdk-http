@@ -25,7 +25,8 @@
     "form-urlencoded": "^1.2.1",
     "isomorphic-fetch": "^2.2.0",
     "jsonwebtoken": "^5.0.5",
-    "request": "^2.64.0"
+    "request": "^2.64.0",
+    "shapeful": "^1.1.0"
   },
   "devDependencies": {
     "mocha": "2.3.3"

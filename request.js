@@ -20,6 +20,8 @@ var request = curry(function(name, tail, value) {
     json: addQuery('JSON'),
     query: addQuery('QUERY'),
     map: addQuery('MAP'),
+    bodyShape: addQuery('BODY_SHAPE'),
+    queryShape: addQuery('QUERY_SHAPE'),
     interpreter: addQuery('INTERPRETER'),
     get: function(){return req.method('get');},
     post: function(){return req.method('post');},
