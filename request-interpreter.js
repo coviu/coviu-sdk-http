@@ -31,10 +31,15 @@ var handle = exports.handleResponse = function (resolve, reject) {
  * any mapping functions on the result. This is a bit nasty, but pretty useful */
 exports.run = function(des) {
   var render = des.reduce();
-  var validationFailure = utils.validateShape(render);
 
-  if (validationFailure) {
-    return new Promise(function(accept, reject){reject(validationFailure)});
+  // If debug is enable, we run body payload and query validation before we execute
+  // the request.
+  if (render.DEBUG) {
+    var validationFailure = utils.validateShape(render);
+
+    if (validationFailure) {
+      return new Promise(function(accept, reject){reject(validationFailure)});
+    }
   }
 
   var req = {};
